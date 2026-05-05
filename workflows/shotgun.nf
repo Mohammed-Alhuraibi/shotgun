@@ -115,7 +115,7 @@ workflow SHOTGUN {
     .reads
     .mix(ch_fastq.single)
     .set { ch_cat_fastq }
-    ch_versions = ch_versions.mix(CAT_FASTQ.out.versions.first().ifEmpty(null))
+    ch_versions = ch_versions.mix(CAT_FASTQ.out.versions_cat.ifEmpty(null))
 
     //
     // MODULE: Run FastQC
@@ -124,7 +124,7 @@ workflow SHOTGUN {
         FASTQC (
             INPUT_CHECK.out.reads
         )
-        ch_versions = ch_versions.mix(FASTQC.out.versions.first())
+        ch_versions = ch_versions.mix(FASTQC.out.versions_fastqc.ifEmpty(null))
         ch_multiqc_files = ch_multiqc_files.mix(FASTQC.out.zip.collect{it[1]}.ifEmpty([]))
     }
 

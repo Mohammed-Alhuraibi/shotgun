@@ -15,13 +15,13 @@ process SAMPLESHEET_CHECK {
 
     script: // This script is bundled with the pipeline, in nf-core/shotgun/bin/
     """
-    check_samplesheet.py \\
-        $samplesheet \\
-        samplesheet.valid.csv
+        python3 ${projectDir}/bin/check_samplesheet.py \\
+            $samplesheet \\
+            samplesheet.valid.csv
 
-    cat <<-END_VERSIONS > versions.yml
-    "${task.process}":
-        python: \$(python --version | sed 's/Python //g')
-    END_VERSIONS
+        cat <<-END_VERSIONS > versions.yml
+        "${task.process}":
+            python: \$(python3 --version | sed 's/Python //g')
+        END_VERSIONS
     """
 }

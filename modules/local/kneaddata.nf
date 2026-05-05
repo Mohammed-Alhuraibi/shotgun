@@ -22,7 +22,7 @@ process KNEADDATA {
     def inputs = meta.single_end ? "--input $reads" : "--input ${reads[0]} --input ${reads[1]}"
     prefix = task.ext.prefix ?: "${meta.id}"
     """
-    trim_path=\$(python -c 'import os.path; import shutil; print(os.path.dirname(os.path.realpath(shutil.which("trimmomatic"))))')
+    trim_path=\$(dirname \$(realpath \$(which trimmomatic 2>/dev/null) 2>/dev/null) 2>/dev/null || echo "/usr/local/share/trimmomatic-0.39-2")
     echo \$trim_path
     kneaddata \\
         $args \\
